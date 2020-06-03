@@ -7,7 +7,7 @@ import Head from 'next/head'
 // import dynamic from 'next/dynamic'
 import { GlobalStyle } from '../base/styles'
 import { GlobalTheme } from '../base/theme'
-import { Header } from '../components'
+import { Header, CardPizza } from '../components'
 
 // import('../static/pwa/pwa.js')
 
@@ -31,6 +31,7 @@ class MyApp extends App {
                         <Wrapper>
                             <Header />
                             <Main>
+                            <CardPizza/>
                                 {/* <Component {...pageProps} /> */}
                             </Main>
                         </Wrapper>
