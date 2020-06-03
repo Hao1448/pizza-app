@@ -19,6 +19,8 @@ const h1 = ({ theme }) => css`
 
 const h2 = ({ theme }) => css`
     ${h};
+    font-weight: 500;
+    line-height: 24px;
     font-size: ${theme.fonts.sizes.h2};
 `
 
@@ -26,7 +28,7 @@ const p = ({ theme }) => css`
     font-family: ${theme.fonts.primary};
     font-size: ${theme.fonts.sizes.p};
     color: ${theme.color.black};
-    line-height: 160%;
+    line-height: 100%;
 `
 
 
