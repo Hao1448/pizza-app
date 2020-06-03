@@ -9,18 +9,18 @@ export const GlobalTheme = {
         hd: 1920
     },
     color: {
-        primary: '#C32243',
-        background: '#fff0f5',
+        primary: 'rgb(255, 105, 0)',
         secondary: '#FF0066',
         black: '#333333',
         white: '#FFFFFF',
+        grey: 'ADADAD'
     },
     fonts: {
         primary: `'PT Sans', sans-serif`,
         sizes: {
             h1: '54px',
-            h2: '24px',
-            p: '18px'
+            h2: '20px',
+            p: '14px'
         }
     }
 }
