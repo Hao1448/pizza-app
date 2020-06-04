@@ -1,5 +1,5 @@
-import Myapp from './App'
+import { WidgetCards } from 'components'
 
 export default function Index() {
-  return <Myapp />
+  return <WidgetCards />
 }

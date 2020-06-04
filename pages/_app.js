@@ -5,17 +5,17 @@ import App from 'next/app'
 // import Router from 'next/router'
 import Head from 'next/head'
 // import dynamic from 'next/dynamic'
-import { GlobalStyle } from '../base/styles'
-import { GlobalTheme } from '../base/theme'
-import { Header, CardPizza } from '../components'
+// import { GlobalStyle } from '../base/styles'
+import { GlobalTheme } from 'base/theme'
+import { GlobalStyle } from 'base/styles'
+import { Header } from 'components'
 
 // import('../static/pwa/pwa.js')
 
 
 class MyApp extends App {
     render() {
-        // const { Component, pageProps } = this.props
-
+        const { Component, pageProps } = this.props
         return (
             // <Provider>
                 <ThemeProvider theme={GlobalTheme}>
@@ -31,8 +31,7 @@ class MyApp extends App {
                         <Wrapper>
                             <Header />
                             <Main>
-                            <CardPizza/>
-                                {/* <Component {...pageProps} /> */}
+                                <Component {...pageProps} />
                             </Main>
                         </Wrapper>
                     </Fragment>
