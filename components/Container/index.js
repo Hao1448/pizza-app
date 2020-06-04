@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { breakpoint } from 'styled-components-breakpoint'
+import breakpoint from 'styled-components-breakpoint'
 
 const Container = ({ children }) => {
     return <Wrapper>{children}</Wrapper>
