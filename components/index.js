@@ -1,7 +1,8 @@
 import Header from './Header'
 import Container from './Container'
 import Grid from './Grid'
-import CardPizza from './CardPizza'
 
+export * from './Cards'
+export * from './Widgets'
 
-export { Grid, Container, Header, CardPizza}
+export { Grid, Container, Header }
