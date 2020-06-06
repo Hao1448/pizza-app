@@ -56,10 +56,11 @@ const Button = styled.button`
     font-family: ${p => p.theme.fonts.primary};
     font-size: 18px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 20px;
     width: 100%;
     border-color: ${p => p.theme.color.primary};
     border-style: solid;
+    border-width: 1px;
     background: ${p =>p.theme.color.primary};
     color: ${p =>p.theme.color.white};
     transition: background 0.2s, color 0.2s, border-color 0.2s, font-weight 0.2s;
@@ -85,6 +86,11 @@ const Secondary = styled(Button)`
     background: transparent;
     border-color: ${p => p.theme.color.primary};
     color: ${p => p.theme.color.primary};
+    &:hover,
+    &:active,
+    &:focus {
+        color: ${p => p.theme.color.white};
+    }
 `
 
 const Technical = styled(Button)`

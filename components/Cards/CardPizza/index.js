@@ -1,55 +1,63 @@
 import styled from 'styled-components'
-import { h2 } from 'base/mixins/text'
+import { p, h2 } from 'base/mixins/text'
 import pricelize from 'base/utils/pricelize'
 import img_pizza from 'assets/images/img_pizza.jpg'
+import { UiButton } from 'components'
 // import Link from 'next/link';
 
 const CardPizza = ({item: {price, title}}) => {
     return (
         <Wrapper>
-            <Image src={img_pizza}/>
-            <Content>
+            <Row className="image">
+                <Image src={img_pizza}/>
+            </Row>
+            <Row>
                 <Title>{title}</Title>
+            </Row>
+            <Row>
                 <Text>Spicy pepperoni, large portion of mozzarella, tomato sauce</Text>
-                <ContentBottom>
-                    <Title>{pricelize(price)} $</Title>
-                    {/* <Button></Button> */}
-                </ContentBottom>
-            </Content>
+            </Row>
+            <Row className='bottom'>
+                <Title className='price'>{pricelize(price)} $</Title>
+                <UiButton type="secondary">Choose</UiButton>
+            </Row>
         </Wrapper>
     )
 
 }
 
 const Wrapper = styled.div`
-    cursor: pointer;
     border-radius: 20px;
     padding: 10px;
-    /* transition: box-shadow 0.2s;
-    &:hover {
-        box-shadow: 0 0 10px 5px  ${p => p.theme.color.secondary};
-    } */
 `
-
 const Title = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    ${h2};
+    font-weight: bold;
 `
 
 const Text = styled.div`
-    ${h2};
+    ${p};
     text-transform: capitalize;
-    color: ${p => p.theme.color.primary};
-    margin: 0;
+    color: ${p => p.theme.color.grey};
 `
 
 const Image = styled.img`
+    cursor: pointer;
     max-width: 100%;
+    transition: transform 0.2s;
+    &:hover { 
+        transform: translate(0, 5px);
+    }
 `
-
-const Content = styled.div``
-
-const ContentBottom = styled.div``
+const Row = styled.div`
+    & + & {
+        margin-top: 10px;
+    }
+    &.bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+`
 
 export default CardPizza
