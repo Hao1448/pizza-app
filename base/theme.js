@@ -10,10 +10,11 @@ export const GlobalTheme = {
     },
     color: {
         primary: 'rgb(255, 105, 0)',
+        primary_dark: 'rgb(217, 99, 52)',
         secondary: '#FF0066',
         black: '#333333',
         white: '#FFFFFF',
-        grey: 'ADADAD'
+        grey: '#ADADAD'
     },
     fonts: {
         primary: `'PT Sans', sans-serif`,
