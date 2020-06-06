@@ -6,7 +6,7 @@ const h = ({ theme }) => css`
     color: ${theme.color.black};
     line-height: 1.15;
     margin: 30px 0 0;
-    
+    letter-spacing: .1rem;
     &:first-child {
         margin-top: 0;
     }
@@ -29,6 +29,7 @@ const p = ({ theme }) => css`
     font-size: ${theme.fonts.sizes.p};
     color: ${theme.color.black};
     line-height: 100%;
+    letter-spacing: .1rem;
 `
 
 
