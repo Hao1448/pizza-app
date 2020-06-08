@@ -1,20 +1,29 @@
 import styled from 'styled-components'
 import { h1 } from 'base/mixins/text'
 import { Container, UiButton, Grid } from 'components'
+import Link from 'next/link';
+import { useContext } from 'react';
+import { CardContext } from 'base/cardContext'
 
 const Header = () => {
+    const { pizzas } = useContext(CardContext);
+    
     return (
         <Wrapper>
             <Container>
                 <Grid>
                     <Row className='title'>
-                        <Title>Pizzeria Pizza App</Title>
+                        <Link Link href="/">
+                            <Title>Pizzeria Pizza App</Title>
+                        </Link>
                     </Row>
                     <Row className='button'>
                         <UiButton wide="true" type={'technical'}>Login</UiButton>
                     </Row>
                     <Row className='button '>
-                        <UiButton wide="true">Cart</UiButton>
+                        <Link href='/cart'>
+                            <UiButton wide="true">Cart{pizzas.length ?   ` +  ${ pizzas.length}` : ''}</UiButton>
+                        </Link>
                     </Row>
                 </Grid>
             </Container>
@@ -42,6 +51,7 @@ const Row = styled.div`
 
 const Title = styled.div`
     ${h1};
+    cursor: pointer;
     text-transform: uppercase;
     text-align: center;
     color: ${p => p.theme.color.primary};
