@@ -95,8 +95,8 @@ const Secondary = styled(Button)`
 
 const Technical = styled(Button)`
     background: transparent;
-    border-color: ${p => p.theme.color.grey} ;
-    color: ${p => p.theme.color.grey};
+    border-color: ${p => p.theme.color.grey_deepdark} ;
+    color: ${p => p.theme.color.grey_deepdark};
     &:hover,
     &:active,
     &:focus {
