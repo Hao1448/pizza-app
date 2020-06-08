@@ -14,7 +14,10 @@ export const GlobalTheme = {
         secondary: '#FF0066',
         black: '#333333',
         white: '#FFFFFF',
-        grey: '#ADADAD'
+        grey: '#F3F3F3',
+        grey_light: '#F0F0F0',
+        grey_dark: '#D5D5D5',
+        grey_deepdark: '#ADADAD',
     },
     fonts: {
         primary: `'PT Sans', sans-serif`,
