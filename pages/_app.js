@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react'
-import { Provider } from 'react-redux'
 import styled, { ThemeProvider } from 'styled-components'
+import { CardProvider } from 'base/cardContext'
 import App from 'next/app'
 // import Router from 'next/router'
 import Head from 'next/head'
 // import dynamic from 'next/dynamic'
-// import { GlobalStyle } from '../base/styles'
 import { GlobalTheme } from 'base/theme'
 import { GlobalStyle } from 'base/styles'
 import { Header } from 'components'
@@ -29,10 +28,12 @@ class MyApp extends App {
                             /> */}
                         </Head>
                         <Wrapper>
-                            <Header />
-                            <Main>
-                                <Component {...pageProps} />
-                            </Main>
+                            <CardProvider>
+                                <Header />
+                                <Main>
+                                    <Component {...pageProps} />              
+                                </Main>
+                            </CardProvider>
                         </Wrapper>
                     </Fragment>
                 </ThemeProvider>
