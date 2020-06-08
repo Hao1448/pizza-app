@@ -1,3 +1,4 @@
 import WidgetCards from './WidgetCards'
+import WidgetOrder from './WidgetOrder'
 
-export { WidgetCards }
+export { WidgetCards, WidgetOrder }

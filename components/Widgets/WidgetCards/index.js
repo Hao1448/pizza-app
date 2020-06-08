@@ -3,39 +3,17 @@ import breakpoint from 'styled-components-breakpoint'
 import { Container, Grid, CardPizza } from 'components'
 
 
-const WidgetCards = () => {
-    const pizza = {
-        title: 'Pepperoni',
-        price: 5
-    }
+const WidgetCards = ({ pizzas }) => {
     return (
         <Wrapper>
             <Container>
-                <Grid>
+                <Grid align="flex-end">
+                { pizzas.map((pizza) => 
                     <CardWrapper>
-                        <CardPizza item={pizza}/>
+                        <CardPizza key={pizza.index} item={pizza} />
                     </CardWrapper>
-                    <CardWrapper>
-                        <CardPizza item={pizza}/>
-                    </CardWrapper>
-                    <CardWrapper>
-                        <CardPizza item={pizza}/>
-                    </CardWrapper>
-                    <CardWrapper>
-                        <CardPizza item={pizza}/>
-                    </CardWrapper>
-                    <CardWrapper>
-                        <CardPizza item={pizza}/>
-                    </CardWrapper>
-                    <CardWrapper>
-                        <CardPizza item={pizza}/>
-                    </CardWrapper>
-                    <CardWrapper>
-                        <CardPizza item={pizza}/>
-                    </CardWrapper>
-                    <CardWrapper>
-                        <CardPizza item={pizza}/>
-                    </CardWrapper>     
+                    )
+                }
                 </Grid>
             </Container>
         </Wrapper>
