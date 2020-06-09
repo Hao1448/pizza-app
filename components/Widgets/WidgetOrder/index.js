@@ -7,13 +7,18 @@ import {
     Grid,
     CardEmptyCart
 } from 'components'
-import { p , h2 } from 'base/mixins/text.js'
+import { h2 } from 'base/mixins/text.js'
+import Link from 'next/link'
 
-const WidgetOrder = ({ products, total, toOrder }) => {
+const WidgetOrder = ({ products, toOrder }) => {
+    let total = 0;
+    for(let pizza of products) {
+        total += pizza.count * 100 * pizza.price;
+    }
+    total /= 100;
     return (
             <Wrapper>
                 <Top>
-                    <Title>Your order</Title>
                     {products.length > 0 ? (
                         products.map(product => {
                             return ( 
@@ -36,13 +41,15 @@ const WidgetOrder = ({ products, total, toOrder }) => {
                     <Fragment>
                         <Bottom>
                             <Grid>
-                                <Text>Итоговая стоимость</Text>
+                                <Text>Final price</Text>
                                 <Price>{total} $</Price>
                             </Grid>
                         </Bottom>
-                        <UiButton onClick={toOrder} wide>
-                            Оформить заказ
-                        </UiButton>
+                        <Link href="/add-address">
+                            <UiButton onClick={toOrder} wide>
+                                Order
+                            </UiButton>
+                        </Link>
                     </Fragment>
                 )} 
             </Wrapper>
@@ -60,19 +67,8 @@ const Wrapper = styled.div`
 `
 
 const Top = styled.div`
-    padding: 0 20px 0;
     ${breakpoint('xs', 'sm')`
         padding: 20px 15px;
-    `}
-`
-const Title = styled.div`
-    display: none;
-    ${h2};
-    margin-bottom: 35px;
-    grid-column: 3 / span 8;
-    ${breakpoint('xs', 'sm')`
-        margin-bottom: 35px;
-        display: block;
     `}
 `
 
@@ -82,11 +78,12 @@ const Card = styled.div`
     }
 `
 const Bottom = styled.div`
-    padding: 30px 40px;
+    padding: 30px 0 40px;
     background: ${p => p.theme.color.grey};
     margin: 40px  0 -20px;
     ${breakpoint('xs', 'sm')`
-        padding: 20px 15px;
+        padding: 20px 15px 30px;
+        margin: 0 0 -20px;
     `}
 `
 
@@ -97,6 +94,7 @@ const Price = styled.div`
     align-items: center;
     ${breakpoint('xs', 'sm')`
         grid-column: span 12;
+        text-align: center;
         margin: 0px;
     `}
 `
@@ -108,6 +106,7 @@ const Text = styled.div`
     ${breakpoint('xs', 'sm')`
         grid-column: span 12;
         margin: 0px;
+        text-align: center;
     `}
 `
 
