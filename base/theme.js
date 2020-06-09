@@ -15,6 +15,7 @@ export const GlobalTheme = {
         black: '#333333',
         white: '#FFFFFF',
         grey: '#F3F3F3',
+        error: '#D30000',
         grey_light: '#F0F0F0',
         grey_dark: '#D5D5D5',
         grey_deepdark: '#ADADAD',
