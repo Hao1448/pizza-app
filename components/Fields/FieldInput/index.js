@@ -2,37 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import breakpoint from 'styled-components-breakpoint'
 import { p } from 'base/mixins/text.js'
+import { Field } from 'formik'
 
-const FieldInput = ({
-    className,
-    field,
-    form: { touched, errors, setFieldValue, setFieldTouched },
-    ...props
-}) => {
-    const customOnChange = (e, callback) => {
-        if (callback) {
-            setFieldValue(field.name, e.target.value.substr(0, 18))
-            callback(e.target.value)
-        } else {
-            setFieldValue(field.name, e.target.value)
-        }
-    }
-    const customOnBlur = (e, callback) => {
-        setFieldTouched(field.name, true)
-    }
-
+const FieldInput = ({...props}) => {
     return (
-        <Wrapper className={`${!className ? `field ${field.name}` : ''}`}>
+        <Wrapper>
             <Input
                 ref={props.forwardRef}
                 disabled={props.disabled}
                 hasError={props.hasError}
-                onChange={e => customOnChange(e, props.onChange)}
-                onBlur={e => customOnBlur(e, props.onBlur)}
+                onChange={props.onChange}
+                onBlur={props.onBlur}
                 placeholder={props.placeholder}
             />
-            {touched[field.name] && errors[field.name] && (
-                <Error className="error">{errors[field.name]}</Error>
+            {props.error && (
+                <Error className="error">{props.error}</Error>
             )}
         </Wrapper>
     )
@@ -76,6 +60,7 @@ const Input = styled.input`
     `}
 `
 const Error = styled.div`
+    position: absolute;
     margin-left: 10px;
     margin-top: 10px;
     font-family: ${p => p.theme.fonts.primary};
