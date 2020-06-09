@@ -7,8 +7,8 @@ import fetch from 'isomorphic-unfetch';
 import { CardContext } from 'base/cardContext'
 
 const Cart = () => {
-    const [arrPizza, setArrPizza] = useState(); // все пиццы из БД
-    const { pizzas, incrementPizzas } = useContext(CardContext); // пиццы из заказа
+    const [arrPizza, setArrPizza] = useState();
+    const { pizzas, incrementPizzas } = useContext(CardContext);
 
     useEffect(() => {
         fetch('/api/pizza')
@@ -36,8 +36,6 @@ const Cart = () => {
                     <Widget>
                         <WidgetOrder
                             products={products}
-                            // total={total_price}
-                            // toOrder={() => misc.toggleDrawer('order')}
                         />
                     </Widget>
                 </Grid>
@@ -49,7 +47,7 @@ const Cart = () => {
 const Wrapper = styled.div`
     margin: 10px 0 100px;
     ${breakpoint('xs', 'sm')`
-        margin: 135px 0 50px;
+        margin: 50px 0;
     `}
 `
 const Title = styled.div`
