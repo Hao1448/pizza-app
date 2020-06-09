@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { p, h2 } from 'base/mixins/text'
 import { UiButton } from 'components'
-// import Link from 'next/link';
 import { useContext } from 'react';
 import { CardContext } from 'base/cardContext'
 
