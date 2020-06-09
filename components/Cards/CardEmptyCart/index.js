@@ -29,7 +29,7 @@ const CardEmptyCart = ({ theme, title, text, button }) => {
 }
 
 const Wrapper = styled.div`
-    background: #ffffff;§
+    background: #ffffff;
 `
 
 const Top = styled.div`
