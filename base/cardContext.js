@@ -1,13 +1,27 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const CardContext = createContext();
 
+const STORAGE_KEY = 'shop';
+const getFromStorage = () => {
+    const str = localStorage.getItem(STORAGE_KEY);
+    return str ? JSON.parse(str) : {
+        'pizzas': []
+    }
+}
+const setToStorage = (data) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+}
+
 const CardProvider = ({children}) => {
-    // pizzas = [{
-    //     id: 1,
-    //     count: 1
-    // }]
     const [pizzas, setPizzas] = useState([]);
+    useEffect(() => {
+        const storeData = getFromStorage();
+        setPizzas(storeData.pizzas)
+    }, []);
+    useEffect(() => {
+        setToStorage({pizzas})
+    }, [pizzas])
     const incrementPizza = pizzaId => {
         let existedPizza = pizzas.find(pizza => pizza.id == pizzaId)
         let newPizzas = []
@@ -31,7 +45,6 @@ const CardProvider = ({children}) => {
                 ...pizzas
             ]
         }
-        console.log({newPizzas})
         setPizzas(newPizzas)
     }
 
@@ -57,10 +70,15 @@ const CardProvider = ({children}) => {
         }
         setPizzas(newPizzas)
     }
+
+    const clearPizzas = (callback) => {
+        setToStorage({pizzass: []})
+        setPizzas([]);
+        callback();
+    }
   return (
     <CardContext.Provider
-        {...{value: { incrementPizza, decrementPizza, pizzas, removePizza }}}
-    //   {...{ value: { user, gridData, detailItem, setDetailItem } }}
+        {...{value: { incrementPizza, decrementPizza, pizzas, removePizza, clearPizzas }}}
     >
       {children}
     </CardContext.Provider>
