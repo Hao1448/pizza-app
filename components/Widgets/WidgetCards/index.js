@@ -7,10 +7,10 @@ const WidgetCards = ({ pizzas }) => {
     return (
         <Wrapper>
             <Container>
-                <Grid align="flex-end">
+                <Grid align="flex-end" >
                 { pizzas.map((pizza) => 
-                    <CardWrapper>
-                        <CardPizza key={pizza.index} item={pizza} />
+                    <CardWrapper key={pizza.id} >
+                        <CardPizza item={pizza} />
                     </CardWrapper>
                     )
                 }
@@ -27,7 +27,7 @@ const CardWrapper = styled.div`
     grid-column: span 3;
     justify-self: center;
     ${breakpoint('xs', 'sm')`
-        grid-column: span 6;
+        grid-column: span 12;
     `}
 `
 export default WidgetCards
