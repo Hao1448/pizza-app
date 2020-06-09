@@ -1,197 +1,207 @@
-import React, { Component } from 'react'
-// import { withRouter } from 'next/router'
+import React, { useState, useContext } from 'react'
 import breakpoint from 'styled-components-breakpoint'
 import styled from 'styled-components'
-import { h2, p } from 'base/mixins/text'
+import { p } from 'base/mixins/text'
 import {
-    FieldInput,
     Grid,
     UiButton
 } from 'components'
-import MaskedInput from 'react-text-mask'
-import { Formik, Form, Field } from 'formik'
-import fields from './fields'
-import validation from './validation'
+import { CardContext } from 'base/cardContext'
+import { Formik } from 'formik'
 
-class FormAddress extends Component {
-    // constructor(props) {
-    //     super(props)
-    //     this.state = {
-    //         isSubmitting: ''
-    //     }
-    // }
+import * as Yup from 'yup'
 
-    // handleSubmit = async (values, form) => {
-    //     const {
-    //         router: { asPath },
-    //         store: { misc }
-    //     } = this.props
+const validation = Yup.object().shape({
+    street: Yup.string().required('Required field'),
+    house: Yup.string().required('Required field'),
+    flat: Yup.string(),
+    floor: Yup.string(),
+    name: Yup.string().required('Required field'),
+    phone: Yup.string()
+        .min(7, 'Invalid format')
+        .required('Required field')
+});
 
-    //     this.setState({
-    //         isSubmitting: true
-    //     })
+const FormAddress = () => {
+    const { pizzas, clearPizzas } = useContext(CardContext);
+    const [error, setError] = useState()
+    return (
+    <Wrapper>
+      <Formik
+        initialValues={{
+            street: '',
+            house: '',
+            flat: '',
+            floor: '',
+            name: '',
+            phone: '',
+        }}
+        validationSchema={validation}
+        onSubmit={(values, actions) => {
+            fetch('/api/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    address: values,
+                    pizzas
+                })
+            })
+            .then(r => r.json())
+            .then(res => {
+                const { success, data, message='Error' } = res
+                if(success) {
+                    clearPizzas(() => {location.href = `/order/${data.id}`});
+                } else {
+                    setError(message);
+                }
+            })
+        }}
+    >
 
-    //     const { name, question, phone, email } = values
-    // }
-
-    render() {
-        return (
-            <Wrapper>
-                <Formik
-                    initialValues={fields}
-                    validationSchema={validation}
-                    onSubmit={(values, formik) => {
-                        this.handleSubmit(values, formik)
-                    }}
-                >
-                    {({ isValid, isSubmitting }) => {
-                        return (
-                            <Form>
-                                <Row>
-                                    <Title>Where to deliver?</Title>
-                                </Row>
-                                <Row>
-                                    <Fields>
-                                        <Field
-                                            name="name"
-                                            render={({ field, form }) => (
-                                                <FieldInput
-                                                    type="text"
-                                                    field={field}
-                                                    form={form}
-                                                    placeholder="Имя"
-                                                />
-                                            )}
-                                        />
-                                        <Field
-                                            name="phone"
-                                            render={({ field, form }) => (
-                                                <MaskedInput
-                                                    mask={[
-                                                        '+',
-                                                        '7',
-                                                        ' ',
-                                                        '(',
-                                                        /[1-9]/,
-                                                        /\d/,
-                                                        /\d/,
-                                                        ')',
-                                                        ' ',
-                                                        /\d/,
-                                                        /\d/,
-                                                        /\d/,
-                                                        '-',
-                                                        /\d/,
-                                                        /\d/,
-                                                        '-',
-                                                        /\d/,
-                                                        /\d/
-                                                    ]}
-                                                    placeholder="Enter a phone number"
-                                                    id="my-input-id"
-                                                    field={field}
-                                                    form={form}
-                                                    type="tel"
-                                                    placeholder="XXX XX XX"
-                                                    render={(ref, props) => {
-                                                        return (
-                                                            <FieldInput
-                                                                forwardRef={ref}
-                                                                {...props}
-                                                            />
-                                                        )
-                                                    }}
-                                                />
-                                            )}
-                                        />
-                                        <Field
-                                            name="email"
-                                            render={({ field, form }) => (
-                                                <FieldInput
-                                                    field={field}
-                                                    form={form}
-                                                    placeholder="Электронная почта"
-                                                    size="big"
-                                                />
-                                            )}
-                                        />
-                                    </Fields>
-                                </Row>
-                                <Row>
-                                    <UiButton
-                                        wide
-                                        type="submit"
-                                        disabled={
-                                            !isValid || this.state.isSubmitting
-                                        }
-                                    >
-                                        Order
-                                    </UiButton>
-                                </Row>
-                                <Row>
-                                    <Error>{this.state.error}</Error>
-                                </Row>
-                            </Form>
-                        )
-                    }}
-                </Formik>
-            </Wrapper>
-        )
-    }
+    {props => {
+ const {touched} = props
+ return (
+    <form onSubmit={props.handleSubmit}>
+        <Grid gap="40px">
+            <FieldWrap className="street">
+                <input
+                    type="text"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    name="street"
+                    value={props.values.street}
+                    placeholder="Street"
+                />
+                {props.errors.street && touched.street && <Error>{props.errors.street}</Error>}
+                </FieldWrap>
+            <FieldWrap className="house">
+                <input
+                    className='house'
+                    type="text"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.house}
+                    name="house"
+                    placeholder="House"
+                />
+                {props.errors.house && touched.house && <Error>{props.errors.house}</Error>}
+            </FieldWrap>
+            <FieldWrap className="flat">
+                <input
+                    className='flat'
+                    type="text"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.flat}
+                    name="flat"
+                    placeholder="Flat"
+                />
+                {props.errors.flat && touched.flat && <Error>{props.errors.flat}</Error>}
+            </FieldWrap>
+            <FieldWrap className="phone">
+                <input
+                    className='phone'
+                    type="text"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.phone}
+                    name="phone"
+                    placeholder="Enter your phone number"
+                />
+                {props.errors.phone && touched.phone && <Error>{props.errors.phone}</Error>}
+            </FieldWrap>
+            <FieldWrap className="floor">
+                <input
+                    className='floor'
+                    type="text"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.floor}
+                    name="floor"
+                    placeholder="Floor"
+                />
+                {props.errors.floor && touched.floor && <Error>{props.errors.floor}</Error>}
+            </FieldWrap>
+            <FieldWrap className="name">
+                <input
+                    className='name'
+                    type="text"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.name}
+                    name="name"
+                    placeholder="Name"
+                />
+                {props.errors.name && touched.name && <Error>{props.errors.name}</Error>}
+            </FieldWrap>
+        </Grid>
+        <ButtonWrap>
+            <UiButton submit={true} wide >Order</UiButton>
+        </ButtonWrap>
+      </form>
+    )
+    }}
+      </Formik>
+      {error ? error : ''}
+    </Wrapper>
+  );
 }
-const Wrapper = styled.div``
-
-const Title = styled.div`
-    ${h2}
-`
-const Text = styled.div`
-    ${p}
-`
-const Row = styled.div`
-    & + & {
-        margin-top: 25px;
+const FieldWrap = styled.div`
+    &.street, &.phone {
+        grid-column: span 6;
+        ${breakpoint('xs', 'sm')`
+            grid-column: span 12;
+        `}
     }
-`
-
-const Fields = styled(p => <Grid {...p} />)`
-    grid-column-gap: 20px;
-    grid-row-gap: 25px;
-    .field {
-        grid-column: span 12;
-        &.name,
-        &.phone {
+    &.floor, &.flat, &.house, &.name {
+        grid-column: span 3;
+        ${breakpoint('xs', 'sm')`
             grid-column: span 6;
-            ${breakpoint('xs', 'md')`
-                grid-column: span 12;
-            `}
-        }
-        &.comment {
-            grid-row: 3 / span 7;
-            height: 100%;
-            ${breakpoint('xs', 'md')`
-                grid-row: 3 / span 7;
-            `}
-        }
+        `}
     }
+    
 `
-
-const Order = styled.div`
-    position: relative;
-`
-
-const OrderButton = styled.div``
 
 const Error = styled.div`
-    color: #fff;
-    font-size: 16px;
-    line-height: 1.55;
+    position: absolute;
+    margin-left: 10px;
+    margin-top: 10px;
+    color: ${p => p.theme.color.error};
+    transition: opacity 0.2s;
 `
-
-const RestorePassword = styled.div`
-    grid-column: span 12;
-    cursor: pointer;
-    font-size: 18px;
-    color: #fff;
+const ButtonWrap = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+`
+const Wrapper = styled.div`
+    input {
+        ${p};
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        box-sizing: border-box;
+        width: 100%;
+        outline: none;
+        padding: 9.5px 12px;
+        border-radius: 5px;
+        color: ${p => p.theme.color.black};
+        border: 1px solid ${p => p.theme.color.grey_dark};
+        &:active,
+        &:focus {
+            color: ${p => p.theme.color.black};
+            border: 1px solid ${p => p.theme.color.primary};
+        }
+        &::placeholder {
+            color: ${p => p.theme.color.grey_deepdark};
+        }
+        ${breakpoint('xs', 'md')`
+            ${p};
+            padding: 11px;
+        `}
+    }
 `
 
 export default FormAddress
