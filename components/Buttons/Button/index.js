@@ -9,7 +9,8 @@ class UiButton extends Component {
             isDisabled,
             children,
             onClick,
-            wide = false
+            wide = false,
+            submit = false
         } = this.props
         return (
             <Wrapper wide={wide} type={type}>
@@ -18,6 +19,7 @@ class UiButton extends Component {
                         onClick={onClick}
                         isDisabled={isDisabled}
                         className={className}
+                        type={submit ? 'submit' : 'button'}
                     >
                         {children}
                     </Button>
@@ -69,9 +71,7 @@ const Button = styled.button`
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important; 
-    &:hover,
-    &:active,
-    &:focus {
+    &:hover {
         background: ${p => p.theme.color.primary_dark};
         border-color: ${p => p.theme.color.primary_dark};
     }
@@ -86,9 +86,8 @@ const Secondary = styled(Button)`
     background: transparent;
     border-color: ${p => p.theme.color.primary};
     color: ${p => p.theme.color.primary};
-    &:hover,
-    &:active,
-    &:focus {
+    &:hover
+     {
         color: ${p => p.theme.color.white};
     }
 `
@@ -97,9 +96,8 @@ const Technical = styled(Button)`
     background: transparent;
     border-color: ${p => p.theme.color.grey_deepdark} ;
     color: ${p => p.theme.color.grey_deepdark};
-    &:hover,
-    &:active,
-    &:focus {
+    &:hover
+    {
         background: ${p => p.theme.color.primary};
         border-color: ${p => p.theme.color.primary};
         color: ${p => p.theme.color.white};
