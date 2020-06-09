@@ -10,11 +10,10 @@ import { CardContext } from 'base/cardContext'
 const CardCart = (props) => {
         const { incrementPizza, removePizza, decrementPizza } = useContext(CardContext)
         
-        const { product = {} } = props
+        const { product = {}, disableChangeFlag = false, total } = props
         const { price = 10, count = 1, id, img, title } = product
         
         const { theme } = props
-        console.log(product, 'лял')
         return (
             <Wrapper>
                 <Grid align="center">
@@ -25,23 +24,24 @@ const CardCart = (props) => {
                     </Column>
                     <Column className="text">
                         <Text>
-                            {/* <Brand>{category[0].brand.name}</Brand>
-                            <Title>{name}</Title> */}
                             <Brand>Product</Brand>
                             <Title>{title}</Title>
                         </Text>
                     </Column>
                     <Column className="counter">
-                        <FieldCounter
+                        <Brand>Quantity</Brand>
+                        {disableChangeFlag ? count :
+                        (<FieldCounter
                             handleIncrement={() => incrementPizza(id)}
                             handleDecrement={() => decrementPizza(id)}
-                            // count={count}
-                        />
+                            count={count}
+                        />) }
                     </Column>
                     <Column className="price">
+                        <Brand>Price</Brand>
                         <Price>{Math.round(price * 100 * count) / 100} $</Price>
                     </Column>
-                    <Column className="remove">
+                    { !disableChangeFlag && (<Column className="remove">
                         <UiIcon
                             onClick={() => removePizza(id)}
                             src={icondelete}
@@ -50,13 +50,14 @@ const CardCart = (props) => {
                             color={theme.color.grey_dark}
                             hoverColor={theme.color.primary}
                         />
-                    </Column>
+                    </Column>) }
                 </Grid>
             </Wrapper>
         )
     }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+`
 
 const Column = styled.div`
     &.image {
@@ -72,6 +73,7 @@ const Column = styled.div`
         grid-column: span 5;
         ${breakpoint('xs', 'sm')`
             grid-column: span 8;
+            text-align: center;
         `}
     }
 
@@ -79,6 +81,7 @@ const Column = styled.div`
         grid-column: span 2;
         ${breakpoint('xs', 'sm')`
             grid-column: span 5;
+            text-align: center;
         `}
     }
 
@@ -86,8 +89,9 @@ const Column = styled.div`
         grid-column: span 2;
         ${breakpoint('xs', 'sm')`
             grid-column: span 6;
+            text-align: center;
         `}
-    }
+    } 
 
     &.remove {
         grid-column: span 1;
@@ -102,9 +106,6 @@ const Column = styled.div`
 
 const Image = styled.img`
     max-width: 100%;
-    /* ${breakpoint('xs', 'sm')`
-        grid-column: span 4;
-    `} */
 `
 const Brand = styled.div`
     ${p};
@@ -112,11 +113,8 @@ const Brand = styled.div`
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    font-family: ${p => p.theme.fonts.secondary};
+    margin: 0 0 15px;
     color: ${p => p.theme.color.grey_dark};
-    ${breakpoint('xs', 'sm')`
-       display: none;
-    `}
 `
 const Text = styled.div`
     grid-column: span 5;
@@ -127,7 +125,6 @@ const Text = styled.div`
 
 const Title = styled.div`
     ${h2};
-    margin: 15px 0 0;
     font-family: ${p => p.theme.fonts.primary};
 `
 const Price = styled.div`
